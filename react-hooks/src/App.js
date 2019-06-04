@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
+import Counter from './Counter';
+import UseInput from './UseInput';
 
 function App() {
-  const [count, setCount]=useState(0);
+  const validate = value => (
+    value.length <= 10 && !value.includes("@")
+  );
+  const name = UseInput("Mr.", validate);
   return (
     <>
-      {count}
-      <button onClick={() => setCount(count+1)}>Increment</button>
-      <button onClick={() => setCount(count-1)}>Decrement</button>
+      <Counter />
+      <input placeholder="Name" {...name} />
     </>
   );
 }
