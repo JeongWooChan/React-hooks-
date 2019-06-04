@@ -4,6 +4,8 @@ import UseInput from './UseInput';
 import UseTabs from './UseTabs';
 import UseTitle from './UseTitle';
 import UseClick from './UseClick';
+import UseConfirm from './UseConfirm';
+import UsePreventLeave from './UsePreventLeave';
 
 const content = [
   {
@@ -28,6 +30,10 @@ function App() {
   setTimeout(() => titleUpdater("home"), 5000);
   const sayHello = () => console.log("sayHello");
   const title = UseClick(sayHello);
+  const deleteWorld = () => console.log("deleting the world");
+  const cancelWorld = () => console.log("cancel");
+  const confirmDelete = UseConfirm("Are you sure", deleteWorld, cancelWorld);
+  const {enablePrevent, disablePrevent } = UsePreventLeave(); 
 
   return (
     <>
@@ -38,6 +44,12 @@ function App() {
       </div>
       {currentItem.content}
       <h1 ref={title}>HI</h1>
+      <button onClick={confirmDelete}>Delete the world</button>
+      <div>
+        <h3>usePreventLeave</h3>
+        <button onClick={enablePrevent}>Protect</button>
+        <button onClick={disablePrevent}>UnProtect</button>
+      </div>
     </>
   );
 }
