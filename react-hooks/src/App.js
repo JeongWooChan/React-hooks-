@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Counter from './Counter';
 import UseInput from './UseInput';
 import UseTabs from './UseTabs';
@@ -8,6 +8,8 @@ import UseConfirm from './UseConfirm';
 import UsePreventLeave from './UsePreventLeave';
 import UseFadeIn from './UseFadeIn';
 import useNetwork from './useNetwork';
+import useScroll from './useScroll';
+import useFullScreen from './useFullScreen';
 
 const content = [
   {
@@ -42,9 +44,11 @@ function App() {
     console.log(online?"we just went online" : "we are offline");
   }
   const onLine = useNetwork(handleNetworkChange);
+  const { y } = useScroll();
+  const {element, triggerFullScreen, exitFullScreen} = useFullScreen();
 
   return (
-    <>
+    <div style={{ height: "1000vh"}}>
       <div>
         <h3>1.useState</h3>
         <Counter />
@@ -81,7 +85,19 @@ function App() {
         <h3>7. useNetwork</h3>
         <h4>{onLine ? "Online" : "Offline"}</h4>
       </div>
-    </>
+      <div>
+        <h3>8. useScroll</h3>
+        <h4 style={ {color: y > 100 ? "red" : "blue"} }>Hi</h4>
+      </div>
+      <div>
+        <h3>useFullScreen</h3>
+        {/* <div ref={element}>
+          <button onClick= {exitFullScreen}>Exit fullScreen</button>
+        </div> */}
+        <img ref={element} src="https://t1.daumcdn.net/cfile/tistory/9994813D5C7A96FA20" width="600px" alt="img"/>
+        <button onClick={triggerFullScreen} style={{display:"block"}}>Make FullScreen</button>
+      </div>
+    </div>
   );
 }
 
