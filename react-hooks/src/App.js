@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Counter from './Counter';
 import UseInput from './UseInput';
 import UseTabs from './UseTabs';
 import UseTitle from './UseTitle';
+import UseClick from './UseClick';
 
 const content = [
   {
@@ -25,6 +26,8 @@ function App() {
   const {currentItem, changeItem} = UseTabs(0, content);
   const titleUpdater = UseTitle("Loading...");
   setTimeout(() => titleUpdater("home"), 5000);
+  const sayHello = () => console.log("sayHello");
+  const title = UseClick(sayHello);
 
   return (
     <>
@@ -34,6 +37,7 @@ function App() {
         {content.map((section,index) => <button key={section.id} onClick={() => changeItem(index)}>{section.tab}</button> )}
       </div>
       {currentItem.content}
+      <h1 ref={title}>HI</h1>
     </>
   );
 }
