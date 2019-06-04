@@ -6,6 +6,8 @@ import UseTitle from './UseTitle';
 import UseClick from './UseClick';
 import UseConfirm from './UseConfirm';
 import UsePreventLeave from './UsePreventLeave';
+import UseFadeIn from './UseFadeIn';
+import useNetwork from './useNetwork';
 
 const content = [
   {
@@ -34,21 +36,50 @@ function App() {
   const cancelWorld = () => console.log("cancel");
   const confirmDelete = UseConfirm("Are you sure", deleteWorld, cancelWorld);
   const {enablePrevent, disablePrevent } = UsePreventLeave(); 
+  const fadeIn = UseFadeIn(2, 2);
+  const fadeIn2 = UseFadeIn(5, 5);
+  const handleNetworkChange = (online) => {
+    console.log(online?"we just went online" : "we are offline");
+  }
+  const onLine = useNetwork(handleNetworkChange);
 
   return (
     <>
-      <Counter />
-      <input placeholder="Name" {...name} />
       <div>
-        {content.map((section,index) => <button key={section.id} onClick={() => changeItem(index)}>{section.tab}</button> )}
+        <h3>1.useState</h3>
+        <Counter />
+        <input placeholder="Name" {...name} />
+        <span>10글자 & "@" 포함 x</span>
       </div>
-      {currentItem.content}
-      <h1 ref={title}>HI</h1>
-      <button onClick={confirmDelete}>Delete the world</button>
       <div>
-        <h3>usePreventLeave</h3>
+        <h3>2. useTab </h3>
+        {content.map((section,index) => <button key={section.id} onClick={() => changeItem(index)}>{section.tab}</button> )}
+        <div>
+          {currentItem.content}
+        </div>
+      </div>
+      <div>
+        <h3>3. useClick</h3>
+        <button ref={title}>버튼을 클릭한 후 console 확인</button>
+      </div>
+      <div>
+        <h3>4. useConfirm</h3>
+        <button onClick={confirmDelete}>Delete the world</button>
+      </div>
+      <div>
+        <h3>5. usePreventLeave</h3>
+        <p>Protect를 누른 후 새로고침</p>
         <button onClick={enablePrevent}>Protect</button>
         <button onClick={disablePrevent}>UnProtect</button>
+      </div>
+      <div>
+        <h3>6. useFadeIn</h3>
+        <h4 {...fadeIn} >useFadeIn</h4>
+        <p {...fadeIn2}>lalala</p>
+      </div>
+      <div>
+        <h3>7. useNetwork</h3>
+        <h4>{onLine ? "Online" : "Offline"}</h4>
       </div>
     </>
   );
