@@ -2,6 +2,7 @@ import React from 'react';
 import Counter from './Counter';
 import UseInput from './UseInput';
 import UseTabs from './UseTabs';
+import UseTitle from './UseTitle';
 
 const content = [
   {
@@ -22,6 +23,9 @@ function App() {
   );
   const name = UseInput("Mr.", validate);
   const {currentItem, changeItem} = UseTabs(0, content);
+  const titleUpdater = UseTitle("Loading...");
+  setTimeout(() => titleUpdater("home"), 5000);
+
   return (
     <>
       <Counter />
